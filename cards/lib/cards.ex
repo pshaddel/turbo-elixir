@@ -44,4 +44,8 @@ defmodule Cards do
       { :error, _reason } -> "File does not exist."
     end
   end
+
+  def create_hand do
+    create_deck |> shuffle
+  end
 end
