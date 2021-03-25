@@ -1,4 +1,4 @@
-defmodule SideTopic do
+defmodule ElixirMaps do
   def use_map do
     ourMap = %{ name: "poorshad", family: "shaddel" }
     ourMap.name
