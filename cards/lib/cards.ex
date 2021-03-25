@@ -57,7 +57,6 @@ defmodule Cards do
     end
   end
 
-
   @doc """
   This method saves the deck in the file name that we give in arguments
   It has two arguments: `deck` and `filename` which is the name of the file that we want to save our data
@@ -69,7 +68,6 @@ defmodule Cards do
     binary = :erlang.term_to_binary(deck)
     File.write(filename, binary)
   end
-
 
   @doc """
   This method loads a deck from the file that we give in the arguments
