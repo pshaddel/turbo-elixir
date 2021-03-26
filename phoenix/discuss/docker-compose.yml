@@ -1,0 +1,19 @@
+version: '2'
+
+networks:
+  phoenix-net:
+    driver: bridge
+
+services:
+  postgresql:
+    image: 'bitnami/postgresql:latest'
+    networks:
+      - phoenix-net
+    environment:
+      - POSTGRESQL_USERNAME=admin
+      - POSTGRESQL_PASSWORD="123"
+      - POSTGRESQL_DATABASE=discuss
+    ports:
+      - '5432:5432'
+    volumes:
+      - './postgresql_data:/bitnami/postgresql'
