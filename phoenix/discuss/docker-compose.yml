@@ -10,10 +10,10 @@ services:
     networks:
       - phoenix-net
     environment:
-      - POSTGRESQL_USERNAME=admin
-      - POSTGRESQL_PASSWORD="123"
-      - POSTGRESQL_DATABASE=discuss
+      - POSTGRESQL_USERNAME=postgres
+      - POSTGRESQL_PASSWORD=postgres
+      - POSTGRESQL_DATABASE=discuss_dev
     ports:
-      - '5432:5432'
+      - '5439:5432'
     volumes:
       - './postgresql_data:/bitnami/postgresql'
