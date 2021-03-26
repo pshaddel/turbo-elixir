@@ -1,1 +1,8 @@
 /* This file is for your main application css. */
+.nav-header {
+  display: flex;
+  flex: auto;
+}
+.nav-items {
+  -ms-flex-item-align: center;
+}
