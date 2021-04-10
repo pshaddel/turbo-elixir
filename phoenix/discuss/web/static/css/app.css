@@ -6,3 +6,8 @@
 .nav-items {
   -ms-flex-item-align: center;
 }
+
+.help-block {
+  color: red;
+  text-transform: capitalize;
+}

@@ -1,0 +1,3 @@
+<div class="form-group">
+  <p style="color: red"><%= @test %></p>
+</div>
