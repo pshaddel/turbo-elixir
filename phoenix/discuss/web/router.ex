@@ -31,7 +31,9 @@ defmodule Discuss.Router do
     pipe_through(:browser)
     get("/", TopicController, :index)
     get("/new", TopicController, :new)
+    get("/:id/edit", TopicController, :edit)
     post("/", TopicController, :create)
+    put("/:id", TopicController, :update)
   end
 
   # Other scopes may use custom stacks.
