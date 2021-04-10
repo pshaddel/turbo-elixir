@@ -29,6 +29,7 @@ defmodule Discuss.Router do
 
   scope "/topics", Discuss do
     pipe_through(:browser)
+    get("/", TopicController, :index)
     get("/new", TopicController, :new)
     post("/", TopicController, :create)
   end
