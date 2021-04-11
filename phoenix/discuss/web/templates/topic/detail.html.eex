@@ -1,0 +1,4 @@
+<p>
+  Id: <%= @id %>
+  title: <%= @title %>
+</p>

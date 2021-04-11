@@ -34,6 +34,28 @@ defmodule Discuss.TopicController do
     end
   end
 
+  def show(conn, %{"id" => id}) do
+    topicStruct = Repo.get(Topic, id)
+    %{title: title, id: id} = topicStruct
+    render(conn, "detail.html", title: title, id: id)
+  end
+
+  def delete(conn, %{"id" => id}) do
+    topicStruct = Repo.get(Topic, id)
+
+    case Repo.delete(topicStruct) do
+      {:ok, _topic} ->
+        conn
+        |> put_flash(:info, "Topic deleted successfully")
+        |> redirect(to: topic_path(conn, :index))
+
+      {:error, _changeset} ->
+        conn
+        |> put_flash(:info, "Deleting Topic Failed")
+        |> redirect(to: topic_path(conn, :index))
+    end
+  end
+
   def new(conn, _params) do
     changeset = Topic.changeset(%Topic{}, %{})
     render(conn, "new.html", changeset: changeset)

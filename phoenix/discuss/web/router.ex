@@ -29,15 +29,13 @@ defmodule Discuss.Router do
 
   scope "/topics", Discuss do
     pipe_through(:browser)
-    get("/", TopicController, :index)
-    get("/new", TopicController, :new)
-    get("/:id/edit", TopicController, :edit)
-    post("/", TopicController, :create)
-    put("/:id", TopicController, :update)
+    # get("/", TopicController, :index)
+    # get("/new", TopicController, :new)
+    # get("/:id/edit", TopicController, :edit)
+    # post("/", TopicController, :create)
+    # put("/:id", TopicController, :update)
+    # delete("/:id", TopicController, :delete)
+    # get("/:id", TopicController, :getById)
+    resources("/", TopicController)
   end
-
-  # Other scopes may use custom stacks.
-  # scope "/api", Discuss do
-  #   pipe_through :api
-  # end
 end
