@@ -8,7 +8,7 @@ defmodule Discuss.TopicController do
     #   from(p in Topic,
     #     select: p.title and p.id
     #   )
-
+    IO.inspect(conn.assigns)
     data = Repo.all(Topic)
     render(conn, "index.html", data: data)
   end
