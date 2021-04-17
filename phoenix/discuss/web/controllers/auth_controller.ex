@@ -18,7 +18,7 @@ defmodule Discuss.AuthController do
 
   def signout(conn, _params) do
     conn
-    |> put_session(:user_id, nil)
+    |> configure_session(drop: true)
     |> redirect(to: topic_path(conn, :index))
   end
 
