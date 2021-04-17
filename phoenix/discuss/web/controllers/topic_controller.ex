@@ -2,6 +2,7 @@ defmodule Discuss.TopicController do
   use Discuss.Web, :controller
   alias Discuss.Topic
   plug(Discuss.Plugs.Authenticate when action in [:create, :edit, :update, :delete, :new])
+  plug(:check_post_owner when action in [:edit, :update, :delete])
 
   def index(conn, _params) do
     # Fetch all post titles
@@ -63,7 +64,10 @@ defmodule Discuss.TopicController do
   end
 
   def create(conn, %{"topic" => topic}) do
-    changeset = Topic.changeset(%Topic{}, topic)
+    changeset =
+      conn.assigns[:user]
+      |> Ecto.build_assoc(:topics)
+      |> Topic.changeset(topic)
 
     case Repo.insert(changeset) do
       {:ok, topic} ->
@@ -76,6 +80,21 @@ defmodule Discuss.TopicController do
       {:error, changeset} ->
         IO.inspect(changeset)
         render(conn, "new.html", changeset: changeset)
+    end
+  end
+
+  def check_post_owner(conn, _pararms) do
+    %{params: %{"id" => topic_id}} = conn
+    # IO.inspect(Repo.get(Discuss.Topic, topic_id).id)
+    # Io.inspect(conn.assigns.user.id)
+
+    if Repo.get(Discuss.Topic, topic_id).user_id == conn.assigns.user.id do
+      conn
+    else
+      conn
+      |> put_flash(:error, "You do not have authority to do this")
+      |> redirect(to: topic_path(conn, :index))
+      |> halt()
     end
   end
 end
