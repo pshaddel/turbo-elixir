@@ -9,7 +9,6 @@ defmodule Discuss.AuthController do
     email = auth.info.email
     name = auth.info.name
     provider = "github"
-    IO.puts("+++++++")
     user_params = %{email: email, name: name, provider: provider, token: token}
     changeset = Discuss.User.changeset(%Discuss.User{}, user_params)
     signin(conn, changeset)

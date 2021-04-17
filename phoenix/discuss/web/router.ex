@@ -21,12 +21,12 @@ defmodule Discuss.Router do
     get("/", PageController, :index)
   end
 
-  scope "/test", Discuss do
-    # Use the default browser stack
-    pipe_through(:browser)
+  # scope "/test", Discuss do
+  #   # Use the default browser stack
+  #   pipe_through(:browser)
 
-    get("/", TestController, :main)
-  end
+  #   get("/", TestController, :main)
+  # end
 
   scope "/topics", Discuss do
     pipe_through(:browser)

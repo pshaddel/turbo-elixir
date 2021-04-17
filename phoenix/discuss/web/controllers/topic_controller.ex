@@ -1,6 +1,7 @@
 defmodule Discuss.TopicController do
   use Discuss.Web, :controller
   alias Discuss.Topic
+  plug(Discuss.Plugs.Authenticate when action in [:create, :edit, :update, :delete, :new])
 
   def index(conn, _params) do
     # Fetch all post titles
