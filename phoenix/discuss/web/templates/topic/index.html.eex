@@ -2,7 +2,9 @@
   <ul class="collection">
   <%= for topic <- @data do %>
     <li class="collection-item" style="margin: 6px">
-      <%= topic.title %>
+      <%= link to: topic_path(@conn, :show, topic.id), class: "" do %>
+        <%= topic.title %>
+      <% end %>
       <%= if @conn.assigns.user && topic.user_id == @conn.assigns.user.id do %>
         <%= link to: topic_path(@conn, :edit, topic.id), class: "" do %>
           <i class="material-icons right middle btn-tiny waves-effect waves-light">edit</i>
