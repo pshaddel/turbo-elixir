@@ -1,4 +1,14 @@
-<p>
-  Id: <%= @id %>
-  title: <%= @title %>
-</p>
+<h4>
+  <%= @title %>
+</h4>
+<ul id="comment-list">
+</ul>
+<div class="input-field">
+  <textarea id="new_commnet" class="materialize-textarea"></textarea>
+  <button id="add_comment" class="btn">Add Comment</button>
+</div>
+<script>
+  document.addEventListener("DOMContentLoaded", ()=> {
+  createSocket(<%= @id %>)
+  })
+</script>
