@@ -80,7 +80,7 @@ const renderComment = ({ comment }) => {
 const renderComments = (comments) => {
   const renderedComments = comments.map(comment => {
     return `
-    <li class="collection-item">${comment.content}</li>
+    <li id=${comment.id} class="collection-item">${comment.content} - <span class="right" style="font-size: 10px;color: cadetblue">${comment.user ? comment.user.name : "Anonymos"}<span></li>
     `
   })
   document.querySelector('#comment-list').innerHTML = renderedComments.join("")

@@ -10,17 +10,19 @@ defmodule Discuss.CommentChannel do
     topic =
       Discuss.Topic
       |> Repo.get(topic_id)
-      |> Repo.preload(comments: from(c in Comment, order_by: [desc: c.inserted_at]))
+      |> Repo.preload(comments: [:user])
 
     {:ok, %{comments: topic.comments}, assign(socket, :topic, topic)}
   end
 
   def handle_in(name, %{"content" => content}, socket) do
     topic = socket.assigns.topic
+    user_id = socket.assigns.user_id
+    IO.inspect(user_id)
 
     changeset =
       topic
-      |> build_assoc(:comments)
+      |> build_assoc(:comments, user_id: user_id)
       |> Comment.changeset(%{content: content})
 
     case name do
