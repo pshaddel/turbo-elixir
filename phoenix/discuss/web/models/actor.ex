@@ -1,10 +1,9 @@
-defmodule Discuss.Topic do
+defmodule Discuss.Actor do
   use Discuss.Web, :model
 
-  schema "topics" do
-    field(:title, :string)
-    belongs_to(:user, Discuss.User)
-    has_many(:comments, Discuss.Comment)
+  schema "actors" do
+    field(:name, :string)
+    many_to_many(:movies, Discuss.Movie, join_through: "movies_actors")
   end
 
   def changeset(struct, params \\ %{}) do

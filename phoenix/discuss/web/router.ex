@@ -7,6 +7,7 @@ defmodule Discuss.Router do
     plug(:fetch_flash)
     plug(:protect_from_forgery)
     plug(:put_secure_browser_headers)
+    plug(Discuss.Plugs.SetUser)
   end
 
   pipeline :api do
@@ -20,12 +21,12 @@ defmodule Discuss.Router do
     get("/", PageController, :index)
   end
 
-  scope "/test", Discuss do
-    # Use the default browser stack
-    pipe_through(:browser)
+  # scope "/test", Discuss do
+  #   # Use the default browser stack
+  #   pipe_through(:browser)
 
-    get("/", TestController, :main)
-  end
+  #   get("/", TestController, :main)
+  # end
 
   scope "/topics", Discuss do
     pipe_through(:browser)
@@ -37,5 +38,19 @@ defmodule Discuss.Router do
     # delete("/:id", TopicController, :delete)
     # get("/:id", TopicController, :getById)
     resources("/", TopicController)
+  end
+
+  scope "/auth", Discuss do
+    pipe_through(:browser)
+    # get("/", TopicController, :index)
+    # get("/new", TopicController, :new)
+    # get("/:id/edit", TopicController, :edit)
+    # post("/", TopicController, :create)
+    # put("/:id", TopicController, :update)
+    # delete("/:id", TopicController, :delete)
+    # get("/:id", TopicController, :getById)
+    get("/signout", AuthController, :signout)
+    get("/:provider", AuthController, :request)
+    get("/:provider/callback", AuthController, :callback)
   end
 end

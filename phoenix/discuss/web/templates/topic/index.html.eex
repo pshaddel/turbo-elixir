@@ -1,15 +1,19 @@
 <h3>Topics</h3>
   <ul class="collection">
   <%= for topic <- @data do %>
-    <li class="collection-item" style="margin: 6px"> <%= topic.title %>
-    <%= link to: topic_path(@conn, :edit, topic.id), class: "" do %>
-      <i class="material-icons right middle btn-tiny waves-effect waves-light">edit</i>
-  <% end %>
-    <%= link to: topic_path(@conn, :delete, topic.id), class: "", method: :delete do %>
-      <i class="material-icons right middle btn-tiny waves-effect waves-light">delete</i>
-  <% end %>
-
-      </li>
+    <li class="collection-item" style="margin: 6px">
+      <%= link to: topic_path(@conn, :show, topic.id), class: "" do %>
+        <%= topic.title %>
+      <% end %>
+      <%= if @conn.assigns.user && topic.user_id == @conn.assigns.user.id do %>
+        <%= link to: topic_path(@conn, :edit, topic.id), class: "" do %>
+          <i class="material-icons right middle btn-tiny waves-effect waves-light">edit</i>
+        <% end %>
+        <%= link to: topic_path(@conn, :delete, topic.id), class: "", method: :delete do %>
+          <i class="material-icons right middle btn-tiny waves-effect waves-light">delete</i>
+        <% end %>
+      <% end %>
+    </li>
   <% end %>
   </ul>
 

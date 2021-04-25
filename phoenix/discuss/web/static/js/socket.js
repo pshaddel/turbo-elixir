@@ -3,9 +3,9 @@
 
 // To use Phoenix channels, the first step is to import Socket
 // and connect at the socket path in "lib/my_app/endpoint.ex":
-import {Socket} from "phoenix"
+import { Socket } from "phoenix"
 
-let socket = new Socket("/socket", {params: {token: window.userToken}})
+let socket = new Socket("/socket", { params: { token: window.userToken } })
 
 // When you connect, you'll often need to authenticate the client.
 // For example, imagine you have an authentication plug, `MyAuth`,
@@ -54,9 +54,34 @@ let socket = new Socket("/socket", {params: {token: window.userToken}})
 socket.connect()
 
 // Now that you are connected, you can join channels with a topic:
-let channel = socket.channel("topic:subtopic", {})
-channel.join()
-  .receive("ok", resp => { console.log("Joined successfully", resp) })
-  .receive("error", resp => { console.log("Unable to join", resp) })
+const createSocket = (topicId) => {
+  let channel = socket.channel(`comments:${topicId}`, {})
+  channel.join()
+    .receive("ok", resp => {
+      console.log("Joined successfully")
+      renderComments(resp.comments);
+    })
+    .receive("error", resp => { console.log("Unable to join", resp) });
+  document.querySelector('#add_comment').addEventListener('click', () => {
+    const content = document.querySelector('#new_commnet').value;
+    channel.push("comment:add", { content: content })
+  })
 
-export default socket
+  channel.on(`comments:${topicId}:new`, renderComment)
+}
+
+window.createSocket = createSocket
+
+const renderComment = ({ comment }) => {
+  document.querySelector('#comment-list').innerHTML = `<li class="collection-item">${comment.content}</li>` + document.querySelector('#comment-list').innerHTML
+  document.querySelector('#new_commnet').value = ""
+}
+
+const renderComments = (comments) => {
+  const renderedComments = comments.map(comment => {
+    return `
+    <li id=${comment.id} class="collection-item">${comment.content} - <span class="right" style="font-size: 10px;color: cadetblue">${comment.user ? comment.user.name : "Anonymos"}<span></li>
+    `
+  })
+  document.querySelector('#comment-list').innerHTML = renderedComments.join("")
+}
